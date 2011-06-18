@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.clouddevday" android:versionName="1.2" android:versionCode="5">
+    <uses-sdk android:minSdkVersion="4"></uses-sdk>
+   <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+
+    <application android:label="@string/app_name" android:description="@string/app_description" android:icon="@drawable/clouddevday" android:debuggable="false">
+				<activity android:name="SplashScreenActivity"
+				android:label="@string/app_name"
+				android:theme="@style/Theme.Transparent">
+                  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
+        <activity android:name="Startup"
+        android:launchMode="singleTask"></activity>        
+		<activity android:name="ScheduleActivity"></activity>
+        <activity android:name="TimeSlotActivity"></activity>
+        <activity android:name="PresentationActivity"></activity>
+
+    </application>
+</manifest>

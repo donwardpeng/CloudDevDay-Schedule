@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CloudDevDay Schedule</string>
+	<string name="app_description">CloudDevDay Schedule by Don Ward</string>
+	<string name="main_no_items">No items</string>
+    <string-array name="presenters_array">
+        <item>Jinesh Varia 1</item>
+        <item>Jinesh Varia 2</item>
+        <item>Paul Czarnik</item>
+        <item>Jennifer Marsman 1</item>
+        <item>Jennifer Marsman 2</item>
+        <item>Ryan Senior</item>
+        <item>David Chandler</item>
+        <item>Doug Willoughby</item>
+        <item>Oleg Zhurakousky</item>
+        <item>Brian Prince 1</item>
+        <item>Brian Prince 2</item>
+        <item>Mark Stanislav</item>
+        <item>Nilanjan Raychaudhuri</item>
+        <item>Dennis Burton</item>
+        <item>Tim Fisher</item>
+     </string-array>
+
+<string-array name="presenters_desc_array">
+</string-array>
+
+<string-array name="presenters_titles">
+<item>Patterns and Best Practices</item>
+<item>Building Powerful Web Apps</item>
+<item>Performance Testing: Putting Cloud Customers Back in the Driver\'s Seat</item>
+<item>Azure 101</item>
+<item>Your First Azure App</item>
+<item>Triplestore Testing in the Cloud</item>
+<item>Launching Scalable Apps With Google App Engine</item>
+<item>Cloud Performance with CloudSleuth</item>
+<item>Spring Cloud Integration</item>
+<item>Azure Storage Options</item>
+<item>Cloud Patterns and Scenarios</item>
+<item>DevOps</item>
+<item>Cloudy Akka</item>
+<item>Azure Migration</item>
+<item>Rails on a Cloud</item>
+</string-array>
+
+<string-array name="rooms_array">
+    <item>Auditorium</item>
+    <item>Azure Boot Camp Room</item>
+    <item>The Czarnik Room</item>
+    <item>Detroit Cloud Group Room</item>
+</string-array>
+
+<string-array name="timeslots_array">
+    <item>Time Slot 1</item>
+    <item>Time Slot 2</item>
+    <item>Time Slot 3</item>
+    <item>Time Slot 4</item>
+  </string-array>
+
+<string-array name="timeslots_times">
+    <item>10:05-11:05</item>
+    <item>11:15-12:15</item>
+    <item>2:40-3:40</item>
+    <item>3:50-4:50</item>
+  </string-array>
+
+<string-array name="time_room_presenter_array">
+<item>Time Slot 1,Auditorium,Paul Czarnik</item>
+<item>Time Slot 1,Azure Boot Camp,Jennifer Marsman 1</item>
+<item>Time Slot 1,The Czarnik Room,Ryan Senior</item>
+<item>Time Slot 2,Auditorium,David Chandler</item>
+<item>Time Slot 2,Azure Boot Camp,Jennifer Marsman 2</item>
+<item>Time Slot 2,The Czarnik Room,Doug Willoughby</item>
+<item>Time Slot 3,Auditorium,Oleg Zhurakousky</item>
+<item>Time Slot 3,Azure Boot Camp,Brian Prince 1</item>
+<item>Time Slot 3,The Czarnik Room,Jinesh Varia 2</item>
+<item>Time Slot 3,Detroit Cloud Group Room,Mark Stanislav</item>
+<item>Time Slot 4,Auditorium,Nilanjan Raychaudhuri</item>
+<item>Time Slot 4,Azure Boot Camp,Dennis Burton</item>
+<item>Time Slot 4,The Czarnik Room,Tim Fisher</item>
+</string-array>
+
+<string-array name="schedule_array">
+<item>8:00am-9:00am - Registration</item>
+<item>9:00am-9:55am - Introductions/** Keynote by Jinesh Varia **</item>
+<item>9:55am-10:05am - Break</item>
+<item>10:05am-11:05am - Time Slot 1 Sessions</item>
+<item>11:05am-11:15am - Break</item>
+<item>11:15am-12:15pm - Time Slot 2 Sessions</item>
+<item>12:15pm-1:30pm - Lunch</item>
+<item>1:30pm-2:30pm - ** Panel **</item>
+<item>2:30pm-2:40pm - Break</item>
+<item>2:40pm-3:40pm - Time Slot 3 Sessions</item>
+<item>3:40pm-3:50pm - Break</item>
+<item>3:50pm-4:50pm - Time Slot 4 Sessions</item>
+<item>4:50pm-5:00pm - Break</item>
+<item>5:00pm-6:00pm - ** Cloud Patterns and Scenarios by Brian Prince **</item>
+<item>6:00pm-7:00pm - After Glow - 1st Floor</item>
+</string-array>
+
+</resources>
