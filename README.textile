@@ -2,7 +2,7 @@ h1{color:black}. CloudDevDay Schedule
 
 h2. Description of Application
 
-p{color:black}. This is a Google Android Application for the CloudDevDay Detroit 2011 conference held at Compuware Corporation on February 19, 20011. It provides attendees of the conference with schedule information as well as abstracts/bios of the presenters. 
+p{color:black}. This is a Google Android Application for the CloudDevDay Detroit 2011 conference held at Compuware Corporation on February 19, 20011. It provides attendees of the conference with schedule information as well as abstracts/bios of the presenters. The application is published in the Google Android Marketplace at "https://market.android.com/details?id=com.clouddevday&feature=search_result":https://market.android.com/details?id=com.clouddevday&feature=search_result
 
 This application is an Eclipse Helio's project, using the Android Plug-in for Eclipse. It supports Android 1.6 and forward.
 
