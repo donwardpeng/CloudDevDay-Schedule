@@ -1,10 +1,16 @@
 package com.clouddevday;
 
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Gravity;
 import android.view.MotionEvent;
+
 /*
  * The SplashScreenActivity Class is used to display the initial Splash Screen for the application.
  * It also reads the Schedule data into the Startup class static member variable - timeRoomPresenters.
@@ -16,59 +22,112 @@ import android.view.MotionEvent;
 public class SplashScreenActivity extends Activity {
 
 	/*
-	 * The splashThread member variable is used to pause the application while the splash screen displays. The splash
-	 * screen either times out or the user taps the screen and interrupts the thread.
+	 * The splashThread member variable is used to pause the application while
+	 * the splash screen displays. The splash screen either times out or the
+	 * user taps the screen and interrupts the thread.
 	 */
 	private Thread splashThread;
-	
-	/**Called when the activity is first created. */
+	private static final int MAX_PROGRESS = 100;
+	/*
+	 * mProgressHandler is used to handle the loading of remote data while the
+	 * Progress Dialog is displayed
+	 */
+	private Handler mProgressHandler;
+	private int mProgress;
+	private ProgressDialog mProgressDialog;
+
+	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
-		   super.onCreate(savedInstanceState);
-		   setContentView(R.layout.splashscreen);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.splashscreen);
 
-		   //Read the Schedule data from the local string resource.
-		   Startup.timeRoomsPresenters = getResources().getStringArray(R.array.time_room_presenter_array);
+		// //Read the Schedule data from the local string resource.
+		// Startup.timeRoomsPresenters =
+		// getResources().getStringArray(R.array.time_room_presenter_array);
 
-		   //instantiate the splashThread
-		  splashThread = new Thread()
-		   {
+		/*
+		 * define the mProgressHandler
+		 */
+		mProgressHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				if (mProgress >= MAX_PROGRESS) {
+					mProgressDialog.dismiss();
+				} 
+				else {
+					mProgress = MAX_PROGRESS;
+					try {
+						/*
+						 * Initialize Time Slot, Room and Presentation data from
+						 * remote URL
+						 */
+						if (!Startup.readRemoteData()) {
+							Startup.timeRoomsPresenters = getResources().getStringArray(
+											R.array.time_room_presenter_array);
+						}
+					}
+					catch (Exception e) {
+						Startup.timeRoomsPresenters = getResources()
+								.getStringArray(R.array.time_room_presenter_array);
+					}
+
+					mProgressHandler.sendEmptyMessageDelayed(0, 100);
+				}
+			}
+		};
+		/*
+		 * Set up the Load Progress Dialog and display it.
+		 */
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("Loading Data.");
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mProgressDialog.setMax(MAX_PROGRESS);
+		mProgress = 0;
+		mProgressDialog.setProgress(0);
+		mProgressDialog.show();
+
+		mProgressHandler.sendEmptyMessage(0);
+		mProgressDialog.getWindow().setGravity(Gravity.LEFT);
+
+		// instantiate the splashThread
+		splashThread = new Thread() {
 			@Override
 			public void run() {
-			super.run();
-		       try {
-		    	   synchronized(this){
-		    		   
-					wait(3000);
+				super.run();
+				try {
+					synchronized (this) {
+
+						wait(3000);
 					}
-					}
-					catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				   finish();
-				   Intent intent = new Intent();
-				   intent.setClassName("com.clouddevday","com.clouddevday.Startup");
-				   startActivity(intent);
-				   stop();
-				}   
-		   };
-		   //Start the splashThread
-		   splashThread.start();
-	   }
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				finish();
+				Intent intent = new Intent();
+				intent.setClassName("com.clouddevday",
+						"com.clouddevday.Startup");
+				startActivity(intent);
+				stop();
+			}
+		};
+		// Start the splashThread
+		 splashThread.start();
+	}
+
 	/*
-	 * onTouchEvent will notify the spashThread which in turn will load the set the intent for the
-	 * Startup Activity and starts it.
-	 * (non-Javadoc)
+	 * onTouchEvent will notify the spashThread which in turn will load the set
+	 * the intent for the Startup Activity and starts it. (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
 	 */
-	   @Override
-	    public boolean onTouchEvent(MotionEvent evt)
-	    {
-	        if(evt.getAction() == MotionEvent.ACTION_DOWN)
-	        {
-	            synchronized(splashThread){
-	               splashThread.notifyAll();
-	            }
-	        }
-	        return true;
-	    }    
+	@Override
+	public boolean onTouchEvent(MotionEvent evt) {
+		if (evt.getAction() == MotionEvent.ACTION_DOWN) {
+			synchronized (splashThread) {
+				splashThread.notifyAll();
+			}
+		}
+		return true;
+	}
 }

@@ -1,6 +1,8 @@
 package com.clouddevday;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -82,6 +84,16 @@ public class ScheduleActivity extends ListActivity {
           	        	 
           	 else 
         	 {
+            		AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+              		builder.setMessage(listItem.toString() + "\n\nNote: Items labelled with ** link to presentation information.")
+              		.setCancelable(false)
+              		.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+              			public void onClick(DialogInterface dialog, int id) {
+                   // ScheduleActivity.this.;
+              			}
+              		});
+              		AlertDialog alert = builder.create();
+              		alert.show();
         		 return;
         	 }
          }
