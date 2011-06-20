@@ -10,7 +10,7 @@ public class ParsedScheduleDataSet {
 	private ArrayList<String> presenterDescriptionsArray = new ArrayList<String>();
 	private ArrayList<String> timeRoomPresentersArray = new ArrayList<String>();
 	private ArrayList<String> presentationTitlesArray = new ArrayList<String>();
-		
+	private int version;	
 	private int extractedInt = 0;
 
 	public String getExtractedString() {
@@ -32,6 +32,15 @@ public class ParsedScheduleDataSet {
 				+ "nExtractedInt = " + this.extractedInt;
 	}
 	
+	public void setVersion(String readVersion)
+	{
+		this.version = Integer.parseInt(readVersion);
+	}
+	
+	public int getVersion()
+	{
+		return version;
+	}
 	public void addRoom(String room)
 	{
 		roomsArray.add(room);

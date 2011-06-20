@@ -3,6 +3,7 @@ package com.clouddevday;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,14 +22,14 @@ import android.view.MotionEvent;
  */
 public class SplashScreenActivity extends Activity {
 
-	/*
+	/**
 	 * The splashThread member variable is used to pause the application while
 	 * the splash screen displays. The splash screen either times out or the
 	 * user taps the screen and interrupts the thread.
 	 */
 	private Thread splashThread;
 	private static final int MAX_PROGRESS = 100;
-	/*
+	/**
 	 * mProgressHandler is used to handle the loading of remote data while the
 	 * Progress Dialog is displayed
 	 */
@@ -40,7 +41,7 @@ public class SplashScreenActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splashscreen);
-
+		MyApp app = new MyApp(this.getApplicationContext());
 		// //Read the Schedule data from the local string resource.
 		// Startup.timeRoomsPresenters =
 		// getResources().getStringArray(R.array.time_room_presenter_array);
@@ -54,24 +55,44 @@ public class SplashScreenActivity extends Activity {
 				super.handleMessage(msg);
 				if (mProgress >= MAX_PROGRESS) {
 					mProgressDialog.dismiss();
-				} 
-				else {
+				} else {
 					mProgress = MAX_PROGRESS;
-					try {
-						/*
-						 * Initialize Time Slot, Room and Presentation data from
-						 * remote URL
-						 */
-						if (!Startup.readRemoteData()) {
-							Startup.timeRoomsPresenters = getResources().getStringArray(
-											R.array.time_room_presenter_array);
-						}
-					}
-					catch (Exception e) {
-						Startup.timeRoomsPresenters = getResources()
-								.getStringArray(R.array.time_room_presenter_array);
-					}
+					ScheduleDataManager scheduleDM = new ScheduleDataManager();
 
+					int remoteVersionNumber;
+					if (scheduleDM.checkForAndParseRemoteData())
+					/*Remote Data Exists*/
+					{					
+					if ((remoteVersionNumber = scheduleDM.getRemoteVersionNumber()) != 0) {
+						/*If remote version number is not zero*/
+						if (scheduleDM.localDataFileExists()) {
+							if (scheduleDM.getLocalVersionNumber() == remoteVersionNumber) {
+								scheduleDM.readLocalDataFile();
+							}/*end local version number equals remote version number */
+							else if (scheduleDM.readRemoteData()) {
+								scheduleDM.storeRemoteDatatoDataFile();
+							}/*end if for read Remote Data */
+
+						}/*end localDataFileExists*/
+						else {
+							scheduleDM.readLocalResourceStringData();
+						}/*end else*/
+
+					}/*end remote version number is not zero */
+				}/*end check if Remote Data Exists*/
+					else
+					{
+						if (scheduleDM.localDataFileExists()) {
+							if (scheduleDM.getLocalVersionNumber() > 0) {
+								scheduleDM.readLocalDataFile();
+							}/*end local version number > 0 */
+						}/*end localDataFileExists*/
+						else {
+							scheduleDM.readLocalResourceStringData();
+						}/*end else*/
+						
+					}/*end else*/
+					Startup.timeRoomsPresenters = scheduleDM.getTimeRoomsPresenters();
 					mProgressHandler.sendEmptyMessageDelayed(0, 100);
 				}
 			}
@@ -98,7 +119,7 @@ public class SplashScreenActivity extends Activity {
 				try {
 					synchronized (this) {
 
-						wait(3000);
+						wait(2000);
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -112,22 +133,22 @@ public class SplashScreenActivity extends Activity {
 			}
 		};
 		// Start the splashThread
-		 splashThread.start();
+		splashThread.start();
 	}
 
-	/*
+	/**
 	 * onTouchEvent will notify the spashThread which in turn will load the set
 	 * the intent for the Startup Activity and starts it. (non-Javadoc)
 	 * 
 	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
 	 */
-	@Override
-	public boolean onTouchEvent(MotionEvent evt) {
-		if (evt.getAction() == MotionEvent.ACTION_DOWN) {
-			synchronized (splashThread) {
-				splashThread.notifyAll();
-			}
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent evt) {
+//		if (evt.getAction() == MotionEvent.ACTION_DOWN) {
+//			synchronized (splashThread) {
+//				splashThread.notifyAll();
+//			}
+//		}
+//		return true;
+//	}
 }

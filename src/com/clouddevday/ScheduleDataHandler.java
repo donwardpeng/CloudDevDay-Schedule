@@ -25,6 +25,7 @@ public class ScheduleDataHandler extends DefaultHandler {
 	private boolean in_trptag = false;
 	private boolean in_scheduletag = false;
 	private boolean in_slottag = false;
+	private boolean in_versiontag=false;
 
 	private ParsedScheduleDataSet myParsedScheduleDataSet = new ParsedScheduleDataSet();
 
@@ -58,6 +59,8 @@ public class ScheduleDataHandler extends DefaultHandler {
 			String qName, Attributes atts) throws SAXException {
 		if (localName.equals("data")) {
 			this.in_datatag = true;
+		} else if (localName.equals("version")) {
+			this.in_versiontag = true;
 		} else if (localName.equals("rooms")) {
 			this.in_roomstag = true;
 		} else if (localName.equals("room")) {
@@ -98,6 +101,8 @@ public class ScheduleDataHandler extends DefaultHandler {
 			throws SAXException {
 		if (localName.equals("data")) {
 			this.in_datatag = false;
+		} else if (localName.equals("version")) {
+			this.in_versiontag = false;
 		} else if (localName.equals("rooms")) {
 			this.in_roomstag = false;
 		} else if (localName.equals("room")) {
@@ -135,6 +140,9 @@ public class ScheduleDataHandler extends DefaultHandler {
 	 */
 	@Override
 	public void characters(char ch[], int start, int length) {
+		if(this.in_versiontag){
+			myParsedScheduleDataSet.setVersion(new String(ch, start, length));			
+		}
 		if (this.in_roomtag) {
 			myParsedScheduleDataSet.addRoom(new String(ch, start, length));
 		} else if (this.in_timetag) {
