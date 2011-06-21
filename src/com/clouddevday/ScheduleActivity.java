@@ -6,6 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -23,7 +28,34 @@ public class ScheduleActivity extends ListActivity {
         //Instantiate a Schedule Adapter
         ScheduleAdapter myListAdapter = new ScheduleAdapter(this,Startup.scheduleItems);
         setListAdapter(myListAdapter);
+        
+        //create new AnimationSet
+        AnimationSet set = new AnimationSet(true);
+
+        //define a new AlphaAnimation
+        Animation animation = new AlphaAnimation(0.0f, 1.0f);
+        //set the duration to 50ms
+        animation.setDuration(50);
+        //add the animation to the AnimationSet
+        set.addAnimation(animation);
+
+        //define a new TranslateAnimation
+        animation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f,Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, -1.0f,Animation.RELATIVE_TO_SELF, 0.0f
+        );
+        //set the duration to 100ms
+        animation.setDuration(100);
+        //add the animation to the AnimationSet
+        set.addAnimation(animation);
+        
+        //define a new LayoutAnimationController
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
         ListView lv = getListView();
+        
+        //set the ListView animation
+        lv.setLayoutAnimation(controller);
+  
         lv.setCacheColorHint(0);
         lv.setTextFilterEnabled(true);
        
