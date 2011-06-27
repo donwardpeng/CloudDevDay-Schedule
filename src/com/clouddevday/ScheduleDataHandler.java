@@ -6,11 +6,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ScheduleDataHandler extends DefaultHandler {
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
-
-	private boolean in_datatag = false;
 	private boolean in_roomstag = false;
 	private boolean in_roomtag = false;
 	private boolean in_timeslottimestag = false;
@@ -57,9 +52,7 @@ public class ScheduleDataHandler extends DefaultHandler {
 	@Override
 	public void startElement(String namespaceURI, String localName,
 			String qName, Attributes atts) throws SAXException {
-		if (localName.equals("data")) {
-			this.in_datatag = true;
-		} else if (localName.equals("version")) {
+		if (localName.equals("version")) {
 			this.in_versiontag = true;
 		} else if (localName.equals("rooms")) {
 			this.in_roomstag = true;
@@ -99,9 +92,7 @@ public class ScheduleDataHandler extends DefaultHandler {
 	@Override
 	public void endElement(String namespaceURI, String localName, String qName)
 			throws SAXException {
-		if (localName.equals("data")) {
-			this.in_datatag = false;
-		} else if (localName.equals("version")) {
+		if (localName.equals("version")) {
 			this.in_versiontag = false;
 		} else if (localName.equals("rooms")) {
 			this.in_roomstag = false;

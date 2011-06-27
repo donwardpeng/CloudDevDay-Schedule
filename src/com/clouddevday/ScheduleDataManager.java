@@ -1,11 +1,9 @@
 package com.clouddevday;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.Reader;
 import java.net.URL;
 
 import javax.xml.parsers.SAXParser;
@@ -204,7 +202,7 @@ public void readLocalResourceStringData(){
 public boolean storeRemoteDatatoDataFile(){
 	try
 	{
-		FileOutputStream fos  = MyApp.getContext().openFileOutput(localDataFileName, MyApp.getContext().MODE_PRIVATE);
+		FileOutputStream fos  = MyApp.getContext().openFileOutput(localDataFileName,MyApp.getContext().MODE_PRIVATE);
 		fos.write(rawRemoteData.getBytes());
 		fos.close();
 		return true;

@@ -32,8 +32,6 @@ import android.widget.TextView;
 
 public class TimeSlotActivity extends ListActivity {
 private String timeSlotName;
-private ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
-private String  timeSlot;
 	
 
 /**Called when the activity is first created. */	
@@ -50,7 +48,7 @@ private String  timeSlot;
         
         //Iterate through all of the rooms for this time slot and 
         //get the presenter and presentation title
-        Iterator it =roomData.keySet().iterator();
+        Iterator<String> it =roomData.keySet().iterator();
         ArrayList<String> presenters = new ArrayList<String>();
         while (it.hasNext())
         {

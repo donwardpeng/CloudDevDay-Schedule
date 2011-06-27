@@ -1,16 +1,13 @@
 package com.clouddevday;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 
 /*
  * The SplashScreenActivity Class is used to display the initial Splash Screen for the application.
@@ -24,11 +21,17 @@ public class SplashScreenActivity extends Activity {
 
 	/**
 	 * The splashThread member variable is used to pause the application while
-	 * the splash screen displays. The splash screen either times out or the
-	 * user taps the screen and interrupts the thread.
+	 * the splash screen displays. The splash screen will time out after 2 seconds.
 	 */
 	private Thread splashThread;
+	/**
+	 * Maximum progress for the Progress Dialog
+	 */
 	private static final int MAX_PROGRESS = 100;
+	/**
+	 * Log TAG
+	 */
+	private static final String TAG = "SplashScreenActivity";
 	/**
 	 * mProgressHandler is used to handle the loading of remote data while the
 	 * Progress Dialog is displayed
@@ -36,16 +39,14 @@ public class SplashScreenActivity extends Activity {
 	private Handler mProgressHandler;
 	private int mProgress;
 	private ProgressDialog mProgressDialog;
+	@SuppressWarnings("unused")
+	private MyApp app;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splashscreen);
-		MyApp app = new MyApp(this.getApplicationContext());
-		// //Read the Schedule data from the local string resource.
-		// Startup.timeRoomsPresenters =
-		// getResources().getStringArray(R.array.time_room_presenter_array);
-
+		app = new MyApp(this.getApplicationContext());
 		/*
 		 * define the mProgressHandler
 		 */
@@ -72,7 +73,6 @@ public class SplashScreenActivity extends Activity {
 							else if (scheduleDM.readRemoteData()) {
 								scheduleDM.storeRemoteDatatoDataFile();
 							}/*end if for read Remote Data */
-
 						}/*end localDataFileExists*/
 						else {
 							scheduleDM.readLocalResourceStringData();
@@ -100,6 +100,7 @@ public class SplashScreenActivity extends Activity {
 		/*
 		 * Set up the Load Progress Dialog and display it.
 		 */
+		Log.i(TAG, "Setting up Progress Dialog");
 		mProgressDialog = new ProgressDialog(this);
 		mProgressDialog.setTitle("Loading Data.");
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -107,10 +108,10 @@ public class SplashScreenActivity extends Activity {
 		mProgress = 0;
 		mProgressDialog.setProgress(0);
 		mProgressDialog.show();
-
+		Log.i(TAG, "Sending Empty Message to Progress Dialog.");
 		mProgressHandler.sendEmptyMessage(0);
 		mProgressDialog.getWindow().setGravity(Gravity.LEFT);
-
+		Log.i(TAG, "Entering Thread.");		
 		// instantiate the splashThread
 		splashThread = new Thread() {
 			@Override
@@ -118,37 +119,23 @@ public class SplashScreenActivity extends Activity {
 				super.run();
 				try {
 					synchronized (this) {
-
+						Log.i(TAG, "In Thread - Waiting 2 seconds.");
 						wait(2000);
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				Log.i(TAG, "In Thread - About to finish Activity.");
 				finish();
 				Intent intent = new Intent();
 				intent.setClassName("com.clouddevday",
 						"com.clouddevday.Startup");
 				startActivity(intent);
-				stop();
+			//	stop();
 			}
 		};
 		// Start the splashThread
 		splashThread.start();
 	}
 
-	/**
-	 * onTouchEvent will notify the spashThread which in turn will load the set
-	 * the intent for the Startup Activity and starts it. (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
-	 */
-//	@Override
-//	public boolean onTouchEvent(MotionEvent evt) {
-//		if (evt.getAction() == MotionEvent.ACTION_DOWN) {
-//			synchronized (splashThread) {
-//				splashThread.notifyAll();
-//			}
-//		}
-//		return true;
-//	}
 }

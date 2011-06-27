@@ -12,7 +12,6 @@ import java.util.*;
  */
 public class Presentations {
 private ArrayList<Presentation> presentationList = new ArrayList<Presentation>();
-private PresentationIterator it = null;
 
 /**
  * Adds a Presentation to the list of presentations maintained by the Presentations Class.

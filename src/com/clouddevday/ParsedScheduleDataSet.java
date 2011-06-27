@@ -2,7 +2,20 @@ package com.clouddevday;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
+/**
+ * The ParseScheduleDataSet class is used to hold all of the parsed XML data about the schedule * 
+ * @author Don Ward
+ *
+ */
 public class ParsedScheduleDataSet {
+	
+	/**
+	 * Log TAG
+	 */
+	private static final String TAG = "ParsedScheduleDataSet";
+	
 	private String extractedString = null;
 	private ArrayList<String> roomsArray = new ArrayList<String>();
 	private ArrayList<String> timesArray = new ArrayList<String>();
@@ -44,7 +57,7 @@ public class ParsedScheduleDataSet {
 	public void addRoom(String room)
 	{
 		roomsArray.add(room);
-		System.out.println("Adding to rooms: "+ room);
+		Log.i(TAG,"Adding to rooms: "+ room);
 	}
 
 	public String[] getRoomsArray()
@@ -62,7 +75,7 @@ public class ParsedScheduleDataSet {
 	public void addTime(String time)
 	{
 		timesArray.add(time);
-		System.out.println("Adding to timeslottimes: "+ time );
+		Log.i(TAG,"Adding to timeslottimes: "+ time );
 	}
 
 	public String[] gettimeSlotTimesArray()
@@ -80,7 +93,7 @@ public class ParsedScheduleDataSet {
 	public void addPresenter(String item)
 	{
 		presentersArray.add(item);
-		System.out.println("Adding to presenters: "+ item );
+		Log.i(TAG,"Adding to presenters: "+ item );
 	}
 
 	public String[] getPresentersArray()
@@ -98,7 +111,7 @@ public class ParsedScheduleDataSet {
 	public void addDesc(String item)
 	{
 		presenterDescriptionsArray.add(item);
-		System.out.println("Adding to descriptions: "+ item );
+		Log.i(TAG,"Adding to descriptions: "+ item );
 	}
 
 	public String[] getDescArray()
@@ -116,7 +129,7 @@ public class ParsedScheduleDataSet {
 	public void addTitle(String item)
 	{
 		presentationTitlesArray.add(item);
-		System.out.println("Adding to descriptions: "+ item );
+		Log.i(TAG,"Adding to descriptions: "+ item );
 	}
 
 	public String[] getTitleArray()
@@ -133,7 +146,7 @@ public class ParsedScheduleDataSet {
 	public void addTimeRoomPresenter(String item)
 	{
 		timeRoomPresentersArray.add(item);
-		System.out.println("Adding to timeRoomPresenters: "+ item );
+		Log.i(TAG,"Adding to timeRoomPresenters: "+ item );
 	}
 
 	public String[] getTimeRoomPresentersArray()

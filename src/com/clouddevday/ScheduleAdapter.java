@@ -31,9 +31,6 @@ public class ScheduleAdapter extends ArrayAdapter<String> {
             row = inflater.inflate(R.layout.list_item, null);
             }
             TextView text = (TextView) row.findViewById(R.id.text1);
-
-  
-            String rowText = text.getText().toString();
          	text.setText(items[position]);
            
             return row;

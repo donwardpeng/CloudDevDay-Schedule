@@ -45,9 +45,7 @@ public class Startup extends TabActivity {
 	*/
 	public static Presentations presentations;
 	private String[] timeSlotTimes;
-	private String[] roomNames;
 	private String[] presenters;
-	private String[] presenterDescriptions;
 	private String[] presentationTitles;	
 	public static String[] timeRoomsPresenters;
 
@@ -164,38 +162,38 @@ public class Startup extends TabActivity {
 		}
 		}
 
-	/**
-	 * Called to read remote data presentation data from a url.
-	 * 
-	 * @return void
-	 */
-	public static boolean readRemoteData() {
-		try {
-			/* Create a URL we want to load some xml-data from. */
-			URL url = new URL("http://clouddevday-schedule.s3-website-us-east-1.amazonaws.com/");
-
-			/* Get a SAXParser from the SAXPArserFactory. */
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			SAXParser sp = spf.newSAXParser();
-
-			/* Get the XMLReader of the SAXParser we created. */
-			XMLReader xr = sp.getXMLReader();
-			/* Create a new ContentHandler and apply it to the XML-Reader */
-			ScheduleDataHandler myHandler = new ScheduleDataHandler();
-			xr.setContentHandler(myHandler);
-
-			/* Parse the xml-data from our URL. */
-			xr.parse(new InputSource(url.openStream()));
-			/* Parsing has finished. */
-
-			/* Our ParseScheduleHandler now provides the parsed data to us. */
-			ParsedScheduleDataSet parsedDataSet = myHandler.getParsedData();
-
-			/* Assign the results */
-			timeRoomsPresenters = parsedDataSet.getTimeRoomPresentersArray();
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
+//	/**
+//	 * Called to read remote data presentation data from a url.
+//	 * 
+//	 * @return void
+//	 */
+//	public static boolean readRemoteData() {
+//		try {
+//			/* Create a URL we want to load some xml-data from. */
+//			URL url = new URL("http://clouddevday-schedule.s3-website-us-east-1.amazonaws.com/");
+//
+//			/* Get a SAXParser from the SAXPArserFactory. */
+//			SAXParserFactory spf = SAXParserFactory.newInstance();
+//			SAXParser sp = spf.newSAXParser();
+//
+//			/* Get the XMLReader of the SAXParser we created. */
+//			XMLReader xr = sp.getXMLReader();
+//			/* Create a new ContentHandler and apply it to the XML-Reader */
+//			ScheduleDataHandler myHandler = new ScheduleDataHandler();
+//			xr.setContentHandler(myHandler);
+//
+//			/* Parse the xml-data from our URL. */
+//			xr.parse(new InputSource(url.openStream()));
+//			/* Parsing has finished. */
+//
+//			/* Our ParseScheduleHandler now provides the parsed data to us. */
+//			ParsedScheduleDataSet parsedDataSet = myHandler.getParsedData();
+//
+//			/* Assign the results */
+//			timeRoomsPresenters = parsedDataSet.getTimeRoomPresentersArray();
+//			return true;
+//		} catch (Exception e) {
+//			return false;
+//		}
+//	}
 }

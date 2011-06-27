@@ -5,13 +5,11 @@ import java.util.Iterator;
 
 public class PresentationIterator implements Iterator<Presentation> {
 	private ArrayList<Presentation> p;
-	private Integer position;
-	private Iterator i;
-	public PresentationIterator(ArrayList presentations){
-		position = 0;
+
+	private Iterator<Presentation> i;
+	public PresentationIterator(ArrayList<Presentation> presentations){
 		p = presentations;
 		i = p.iterator();
-		
 	}
 	@Override
 	public boolean hasNext() {
