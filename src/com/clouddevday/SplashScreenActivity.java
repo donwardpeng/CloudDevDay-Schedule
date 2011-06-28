@@ -9,7 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 
-/*
+/**
  * The SplashScreenActivity Class is used to display the initial Splash Screen for the application.
  * It also displays a loading dialog, which displays while the application determines if it needs to read
  * the latest schedule data from a remote URL or use the data stored in a local file.

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-/*
+/**
  * The ScheduleAdapter Class extends the ArrayAdapter and is 
  * a custom Adapter used by the ScheduleActivity class. By implementing 
  * a custom Adapter the List can be manipulated in future version (i.e.
