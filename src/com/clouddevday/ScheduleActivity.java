@@ -17,119 +17,128 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * The Schedule Activity class extends ListActivity and displays the whole day schedule for the conference in a List Display.
+ * The Schedule Activity class extends ListActivity and displays the whole day
+ * schedule for the conference in a List Display.
+ * 
  * @author Don Ward
- *
  */
 public class ScheduleActivity extends ListActivity {
+
+	/**
+	 * Called on startup. Creates a custom ArrayAdapter, ScheduleAdapter and
+	 * populates the ListView in the ListActivity.
+	 */
+
 	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       
-        //Instantiate a Schedule Adapter
-        ScheduleAdapter myListAdapter = new ScheduleAdapter(this,Startup.scheduleItems);
-        setListAdapter(myListAdapter);
-        
-        //create new AnimationSet
-        AnimationSet set = new AnimationSet(true);
+		super.onCreate(savedInstanceState);
 
-        //define a new AlphaAnimation
-        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-        //set the duration to 50ms
-        animation.setDuration(50);
-        //add the animation to the AnimationSet
-        set.addAnimation(animation);
+		// Instantiate a Schedule Adapter
+		ScheduleAdapter myListAdapter = new ScheduleAdapter(this,
+				Startup.scheduleItems);
+		setListAdapter(myListAdapter);
 
-        //define a new TranslateAnimation
-        animation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f,Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -1.0f,Animation.RELATIVE_TO_SELF, 0.0f
-        );
-        //set the duration to 100ms
-        animation.setDuration(100);
-        //add the animation to the AnimationSet
-        set.addAnimation(animation);
-        
-        //define a new LayoutAnimationController
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
-        ListView lv = getListView();
-        
-        //set the ListView animation
-        lv.setLayoutAnimation(controller);
-  
-        lv.setCacheColorHint(0);
-        lv.setTextFilterEnabled(true);
-       
-       
-        //ListView On Click Handler
-        lv.setOnItemClickListener(new OnItemClickListener() {
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-          //get the text of the selected list item and set the currentTab value for lookup on that tab
-        	  String listItem = ((TextView)view.findViewById(R.id.text1)).getText().toString();
-          	 if (listItem.contains("Time Slot 1"))
-          	 {
-             Intent intent = new Intent(view.getContext(), Startup.class);
-            Startup.currentTab = 1;
-             startActivity(intent);	 
-          	 }          	 
-          	 else if (listItem.contains("Time Slot 2"))
-          	 {
-             Intent intent = new Intent(view.getContext(), Startup.class);
-             Startup.currentTab = 2;
-             startActivity(intent);	 
-          	 }          	 
-          	 else if (listItem.contains("Time Slot 3"))
-          	 {
-             Intent intent = new Intent(view.getContext(), Startup.class);
-             Startup.currentTab = 3;
-             startActivity(intent);	 
-          	 }          	 
-          	 else if (listItem.contains("Time Slot 4"))
-          	 {
-             Intent intent = new Intent(view.getContext(), Startup.class);
-             Startup.currentTab = 4;
-            startActivity(intent);	 
-          	 }          	 
-          	 else if (listItem.contains("Time Slot 5"))
-          	 {
-             Intent intent = new Intent(view.getContext(), Startup.class);
-             Startup.currentTab = 5;
-             startActivity(intent);	 
-          	 }
-             else if(listItem.contains("Keynote"))
-             {
-                 Intent intent = new Intent(view.getContext(), PresentationActivity.class);
-                 intent.putExtra("presentation_Desc","JineshVaria-PatternsandBestPractices");
-                 startActivity(intent);
-             }
-             else if(listItem.contains("Cloud Patterns"))
-             {
-                 Intent intent = new Intent(view.getContext(), PresentationActivity.class);
-                 intent.putExtra("presentation_Desc","BrianPrince-CloudPatternsandScenarios");
-                 startActivity(intent);
-             }
-             else if(listItem.contains("Panel"))
-             {
-                 Intent intent = new Intent(view.getContext(), PresentationActivity.class);
-                 intent.putExtra("presentation_Desc","Panel");
-                 startActivity(intent);
-             }
-          	        	 
-          	 else 
-        	 {
-            		AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-              		builder.setMessage(listItem.toString() + "\n\nNote: Items labelled with ** link to presentation information.")
-              		.setCancelable(false)
-              		.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-              			public void onClick(DialogInterface dialog, int id) {
-                   // ScheduleActivity.this.;
-              			}
-              		});
-              		AlertDialog alert = builder.create();
-              		alert.show();
-        		 return;
-        	 }
-         }
-        });
-	
+		// The following section sets up a 'drop down' effect animation on the
+		// ListView items.
+		// create new AnimationSet
+		AnimationSet set = new AnimationSet(true);
+
+		// define a new AlphaAnimation
+		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+		// set the duration to 50ms
+		animation.setDuration(50);
+		// add the animation to the AnimationSet
+		set.addAnimation(animation);
+
+		// define a new TranslateAnimation
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		// set the duration to 100ms
+		animation.setDuration(100);
+		// add the animation to the AnimationSet
+		set.addAnimation(animation);
+
+		// define a new LayoutAnimationController
+		LayoutAnimationController controller = new LayoutAnimationController(
+				set, 0.5f);
+		ListView lv = getListView();
+
+		// set the ListView animation
+		lv.setLayoutAnimation(controller);
+		lv.setCacheColorHint(0);
+		lv.setTextFilterEnabled(true);
+
+		/**
+		 * ListView On Click Handler - This responds to either a click on a
+		 * presentation by displaying the corresponding PresentationActivity or
+		 * a dialog with an explanation how the list works.
+		 */
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// get the text of the selected list item and set the currentTab
+				// value for lookup on that tab
+				String listItem = ((TextView) view.findViewById(R.id.text1))
+						.getText().toString();
+
+				//Determine action to take based on what was clicked.
+				if (listItem.contains("Time Slot 1")) {
+					Intent intent = new Intent(view.getContext(), Startup.class);
+					Startup.currentTab = 1;
+					startActivity(intent);
+				} else if (listItem.contains("Time Slot 2")) {
+					Intent intent = new Intent(view.getContext(), Startup.class);
+					Startup.currentTab = 2;
+					startActivity(intent);
+				} else if (listItem.contains("Time Slot 3")) {
+					Intent intent = new Intent(view.getContext(), Startup.class);
+					Startup.currentTab = 3;
+					startActivity(intent);
+				} else if (listItem.contains("Time Slot 4")) {
+					Intent intent = new Intent(view.getContext(), Startup.class);
+					Startup.currentTab = 4;
+					startActivity(intent);
+				} else if (listItem.contains("Time Slot 5")) {
+					Intent intent = new Intent(view.getContext(), Startup.class);
+					Startup.currentTab = 5;
+					startActivity(intent);
+				} else if (listItem.contains("Keynote")) {
+					Intent intent = new Intent(view.getContext(),
+							PresentationActivity.class);
+					intent.putExtra("presentation_Desc",
+							"JineshVaria-PatternsandBestPractices");
+					startActivity(intent);
+				} else if (listItem.contains("Cloud Patterns")) {
+					Intent intent = new Intent(view.getContext(),
+							PresentationActivity.class);
+					intent.putExtra("presentation_Desc",
+							"BrianPrince-CloudPatternsandScenarios");
+					startActivity(intent);
+				} else if (listItem.contains("Panel")) {
+					Intent intent = new Intent(view.getContext(),
+							PresentationActivity.class);
+					intent.putExtra("presentation_Desc", "Panel");
+					startActivity(intent);
+				}
+				//Default case displays a dialog displaying how the list works.
+				else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(view
+							.getContext());
+					builder.setMessage(
+							listItem.toString()
+									+ "\n\nNote: Items labelled with ** link to presentation information.")
+							.setCancelable(false)
+							.setNeutralButton("Ok",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog, int id) {
+										}
+									});
+					AlertDialog alert = builder.create();
+					alert.show();
+					return;
+				}
+			}
+		});
 	}
 }

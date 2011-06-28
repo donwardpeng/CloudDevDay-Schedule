@@ -11,18 +11,18 @@ import android.content.Context;
  */
 public class MyApp{
 	
-	static Context contextInstance;
+	private static Context contextInstance;
     public MyApp(Context theAppContext) {
         contextInstance = theAppContext;
     }
+    
     /**
 	 * getContext - used to return the Application context
-	 * 	 * 
+	 * 
 	 *@return Context applicationContext
 	 */
     public static Context getContext() {
         return contextInstance;
     }
-
 }
 

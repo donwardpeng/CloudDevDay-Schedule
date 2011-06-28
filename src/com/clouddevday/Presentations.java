@@ -11,7 +11,9 @@ import java.util.*;
  *
  */
 public class Presentations {
-private ArrayList<Presentation> presentationList = new ArrayList<Presentation>();
+
+	//presentationList ArrayList with all of the presentations.
+	private ArrayList<Presentation> presentationList = new ArrayList<Presentation>();
 
 /**
  * Adds a Presentation to the list of presentations maintained by the Presentations Class.
@@ -32,7 +34,7 @@ public void addPresentation(String presenter, String presentationTitle, String p
  * Returns the Presentation Title for a given Presenter Name. 
  * 
  * @param presenterName
- * @return
+ * @return String title
  */
 public String getPresentationTitle(String presenterName){
 	Presentation tempPres  = null;
@@ -48,10 +50,10 @@ public String getPresentationTitle(String presenterName){
 	}
 
 /**
- * Returns the Presentation Description for a given Presenation Title
+ * Returns the Presentation Description for a given Presentation Title
  * 
  * @param presenterName
- * @return
+ * @return String description
  */
 public String getPresentationDescription(String presentationTitle){
 	Presentation tempPres  = null;
@@ -64,14 +66,15 @@ public String getPresentationDescription(String presentationTitle){
 		}
 		}
 	return "";
-	
-	
 }
 
+/**
+ * return the Iterator used to iterate over the Presentation objects.
+ * @return PresentationIterator
+ */
 private PresentationIterator getIterator()
 {
 	return new PresentationIterator(presentationList);
 }
-
 }
 
